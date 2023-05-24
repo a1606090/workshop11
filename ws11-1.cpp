@@ -2,58 +2,40 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
 using namespace std;
-
-// Vector of int.
-// Used to store the records.
+// vector of int.
+// used to store the records
 typedef vector<int> Records;
-
+// https://www.cplusplus.com/doc/tutorial/files/
 class RecordsManager {
 private:
-    fstream _file;
-    string _filename;
-
+fstream _file;
+string _filename;
 public:
-    RecordsManager(string filename) : _filename(filename) {}
-
-    void read(Records& records) {
-        _file.open(_filename, ios::in);
-        if (_file.is_open()) {
-            string line;
-            while (getline(_file, line)) {
-                try {
-                    records.push_back(stoi(line));
-                } catch (const exception& e) {
-                    cout << "Wrong argument when reading the file: " << _filename << endl;
-                    _file.close();
-                    return;
-                }
-            }
-            _file.close();
-        } else {
-            cout << "Out of range when reading the file: " << _filename << endl;
-        }
-    }
+RecordsManager(string filename) : _filename(filename) {}
+void read(Records &records) {
+_file.open(_filename, ios::in);
+if (_file.is_open()) {
+string line;
+while (std::getline(_file, line)) {
+records.push_back(stoi(line));
+}
+_file.close();
+}
+}
 };
-
 int main() {
-    // Test cases: Uncomment one at a time to test.
-
-    // RecordsManager recordM("test_clean.txt");
-    // RecordsManager recordM("test_corrupt1.txt");
-    RecordsManager recordM("test_corrupt2.txt");
-
-    Records myRecords;
-    recordM.read(myRecords);
-
-    if (!myRecords.empty()) {
-        int sum = 0;
-        for (int i = 0; i < myRecords.size(); i++) {
-            sum += myRecords[i];
-        }
-        cout << "Sum: " << sum << endl;
-    }
-
-    return 0;
+RecordsManager receordM("test_clean.txt");
+// RecordsManager receordM("test_corrupt1.txt");
+// RecordsManager receordM("test_corrupt2.txt");
+Records myRecords;
+// reads records
+receordM.read(myRecords);
+// calculate and print out the sum
+int sum = 0;
+for (int i = 0; i < myRecords.size(); i++) {
+sum += myRecords[i];
+}
+cout << sum << endl;
+return 0;
 }
